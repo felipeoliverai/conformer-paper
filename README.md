@@ -1,4 +1,4 @@
-# conformer-paper
+# Conformer 
 <hr>
 <br>
 
