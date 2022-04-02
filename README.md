@@ -1,7 +1,6 @@
 # Conformer 
 <hr>
 <br>
-***
 
 <p  align="center"> 
      <a href="https://github.com/sooftware/jasper/blob/main/LICENSE">
