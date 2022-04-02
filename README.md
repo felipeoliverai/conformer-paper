@@ -1,2 +1,7 @@
 # conformer-paper
-PyTorch implementation of the paper: 𝘾𝙤𝙣𝙛𝙤𝙧𝙢𝙚𝙧: 𝘾𝙤𝙣𝙫𝙤𝙡𝙪𝙩𝙞𝙤𝙣-𝙖𝙪𝙜𝙢𝙚𝙣𝙩𝙚𝙙 𝙏𝙧𝙖𝙣𝙨𝙛𝙤𝙧𝙢𝙚𝙧 𝙛𝙤𝙧 𝙎𝙥𝙚𝙚𝙘𝙝 𝙍𝙚𝙘𝙤𝙜𝙣𝙞𝙩𝙞𝙤𝙣
+<hr>
+<br>
+
+PyTorch implementation of the paper: 𝐂𝐨𝐧𝐟𝐨𝐫𝐦𝐞𝐫: 𝐂𝐨𝐧𝐯𝐨𝐥𝐮𝐭𝐢𝐨𝐧-𝐚𝐮𝐠𝐦𝐞𝐧𝐭𝐞𝐝 𝐓𝐫𝐚𝐧𝐬𝐟𝐨𝐫𝐦𝐞𝐫 𝐟𝐨𝐫 𝐒𝐩𝐞𝐞𝐜𝐡 𝐑𝐞𝐜𝐨𝐠𝐧𝐢𝐭𝐢𝐨𝐧
+
+
