@@ -2,10 +2,6 @@ import torch
 import torch.nn as nn
 
 
-
-
-
-
 print(torch.__version__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Device: ", device)
@@ -72,4 +68,3 @@ print("\n\n")
 model = FeedForwardModule(encoder_dim=512, expansion_factor=4, dropout_p=0.1).to(device)
 #print(model)
 print(model.forward(inputs)) 
-
