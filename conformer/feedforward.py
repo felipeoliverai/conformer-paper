@@ -66,7 +66,10 @@ class FeedForwardModule(nn.Module):
 
 class ResidualConnectionModule(nn.Module):
 
-    """"""
+    """
+    Residual Connection is applied following pre-norm: x+1 = x + F(LN(x);θl)
+    proposed in paper "Learning Deep Transformer Models for Machine Translation". 
+    """
     def __init__(self, module: nn.Module, module_factor: float = 1.0, input_factor: float = 1.0):
         super(ResidualConnectionModule, self).__init__()
 
