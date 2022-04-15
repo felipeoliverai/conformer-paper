@@ -1,0 +1,7 @@
+https://theaisummer.com/attention/
+
+self-attention: https://theaisummer.com/self-attention/ 
+
+MHSA: https://paperswithcode.com/method/multi-head-attention 
+https://data-science-blog.com/blog/2021/04/07/multi-head-attention-mechanism/
+
