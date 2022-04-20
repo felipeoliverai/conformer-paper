@@ -2,26 +2,31 @@ import torch
 import torch.nn as nn 
 
 
+class ScaledDotProductAttention(nn.Module):
 
-#class MultiHeadedSelfAttention(nn.Module):
+    def __init__(self, d_model=256, q_value=0, k_value=0, v_value=0):
+        super(ScaledDotProductAttention, self).__init__()
 
-#    def __init__(self):
-#        super(MultiHeadedSelfAttention, self).__init__()
+        # Scaled Dot-Product Attention (Self-attention)
+        self.q_value = q_value
+        self.k_value = k_value 
+        self.v_value = v_value
 
-#    self.sequential = nn.Sequential(nn.LayerNorm(inputs),
-#                                    MHSA(), 
-#                                    nn.Dropout())
-    
+    def forward(self, inputs):
+        return self.sequential(inputs)
 
-#    def forward(self, inputs):
-#        return self.sequential(inputs)
 
+
+#class PositionalEmbedding(nn.Module)
 
 
 
 class MHSA(nn.Module):
-    def __init__(self):
+    def __init__(self, encoder_dim = 256):
         super(MHSA, self).__init__()
+
+
+        self.sequential = nn.Sequential(nn.LayerNorm(encoder_dim))
 
     # Self attention
 
@@ -30,7 +35,18 @@ class MHSA(nn.Module):
 
 
 
+
+
+
+
+
+
+
+
+
+
 # Attention mechanism 
+
 
 # hidden layers encoder
 h_layer_encoder_1 = torch.FloatTensor([40])
@@ -42,11 +58,12 @@ h_layer_encoder_4 = torch.FloatTensor([67])
 h_layer_decoder_1 = torch.FloatTensor([14])
 
 
-# scalar attention by layer 
-att_step_1 = (h_layer_encoder_1 * h_layer_decoder_1)
-att_step_2 = (att_step_1 * h_layer_decoder_1)
-att_step_3 = (att_step_2 * h_layer_decoder_1)
-att_step_4 = (att_step_3 * h_layer_decoder_1)
+# scalar attention by layer (Dot product technique)
+att_step_1 = torch.dot(h_layer_decoder_1, h_layer_encoder_1)
+att_step_2 = torch.dot(h_layer_decoder_1, h_layer_encoder_2)
+att_step_3 = torch.dot(h_layer_decoder_1, h_layer_encoder_3)
+att_step_4 = torch.dot(h_layer_decoder_1, h_layer_encoder_4)
+
 
 
 # attention values (hidden layer encoder multiply first decoder layer) 
@@ -58,7 +75,8 @@ print("\n")
 
 
 # concat attention results 
-concat_att = torch.FloatTensor([att_step_1, att_step_2, att_step_3, att_step_4])
+concat_att = torch.stack((att_step_1, att_step_2, att_step_3, att_step_4), dim=0)
+
 
 # pass softmax function (1D)
 att_softmax = nn.functional.softmax(concat_att, dim=0)
