@@ -1,9 +1,12 @@
 from turtle import forward
+from requests import head
 import torch 
 import torch.nn as nn 
+import torch.nn.functional as F
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
+
 
 
 class ScaledDotProductAttention(nn.Module):
@@ -22,12 +25,25 @@ class ScaledDotProductAttention(nn.Module):
         self.k_value = k_value
         self.v_value = v_value
 
-    def forward(self, q_value, k_value, v_value, scale=None):
+    def forward(self, q_value: torch.tensor, k_value: torch.tensor, v_value = torch.tensor, n_dim=256):
         
-        # matmul (q * kT) "t represents a tranpose matrix"
-        q_k_matmul = torch.matmul(q_value, k_value) * v_value # to fix 
 
-        # softmax ()
+        # n_dim to Tensor type 
+        n_dim = torch.Tensor(n_dim).to(device) 
+
+        # matmul (q * kT) "t represents a tranpose matrix"
+        #q_k_matmul = torch.matmul(q_value, torch.t(k_value))
+        q_k_matmul = ((torch.matmul(q_value, torch.t(k_value)) / torch.sqrt(n_dim)) * v_value)
+
+        # softmax 
+        #scaled_dot_product = F.softmax(((q_k_matmul / torch.sqrt(n_dim)) * v_value), -1)
+        scaled_dot_product = F.softmax(q_k_matmul, -1)
+
+
+        
+        #scaled_dot_product = torch.softmax((torch.matmul(q_value, torch.t(k_value)) / torch.sqrt(n_dim)) * v_value).to(device)
+
+        return scaled_dot_product
 
 
 
@@ -37,24 +53,40 @@ class ScaledDotProductAttention(nn.Module):
 
 class MHSA(nn.Module):
 
-    def __init__(self, encoder_dim = 256):
+    def __init__(self, n_head = 5, encoder_dim = 256):
         super(MHSA, self).__init__()
+
+        # number of Heads
+        self.n_head = n_head
 
         # Q,K,V vectors (linear transformations)
         self.fc_q = nn.Linear(encoder_dim, encoder_dim, bias=False)
         self.fc_k = nn.Linear(encoder_dim, encoder_dim, bias=False)
-        self.fc_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
+        self.fc_v = nn.Linear(encoder_dim, encoder_dim, bias=False)
+
+        # scaled dot product layer 
+        self.attention = ScaledDotProductAttention(q_value=self.fc_q, k_value=self.fc_k, v_value=self.fc_v)
 
 
-    def forward(self, query, key, value, mask=None):
+    def forward(self, inputs):
 
         # linear Q,K,V
-        Q = self.fc_q(query)
-        K = self.fc_k(key)
-        V = self.fc_v(value)
+        Q = self.fc_q(inputs)
+        K = self.fc_k(inputs)
+        V = self.fc_v(inputs)
 
-        # Scaled Dot Product layer 
-        attention = ()
+        # Scaled Dot Product layer
+        #heads = torch.empty((256)) 
+        for _ in range(1, self.n_head):
+            scaled_dot_product = self.attention(Q, K, V)
+            multi_heads = torch.cat([scaled_dot_product])
+        
+
+        #multi_heads = torch.cat([scaled_dot_product])
+        # concat scaled dot product matrix
+        #concat_attention = torch.cat([multi_heads], dim=0)
+
+        return multi_heads
         
 
 
@@ -62,22 +94,23 @@ class MHSA(nn.Module):
 
 torch.manual_seed(42)
 inputs = torch.rand(256, device=device)
-#model = MHSA(encoder_dim=256).to(device)
-#print(model)
-encoder_dim = 256
+model = MHSA(encoder_dim=256).to(device)
+print(model)
+output = model.forward(inputs=inputs)
+print(output.size())
 
-q_value = nn.Linear(encoder_dim, encoder_dim, bias=False).to(device)
-k_value = nn.Linear(encoder_dim, encoder_dim, bias=False).to(device)
-v_value = nn.Linear(encoder_dim, encoder_dim, bias=False).to(device)
+#q_value = nn.Linear(encoder_dim, encoder_dim, bias=False).to(device)
+#k_value = nn.Linear(encoder_dim, encoder_dim, bias=False).to(device)
+#v_value = nn.Linear(encoder_dim, encoder_dim, bias=False).to(device)
 
 # forward 
-q_tensor = q_value.forward(inputs)
-k_tensor = k_value.forward(inputs)
-v_tensor = v_value.forward(inputs)
+#q_tensor = q_value.forward(inputs)
+#k_tensor = k_value.forward(inputs)
+#v_tensor = v_value.forward(inputs)
 
 
-concat_attention = torch.cat((q_tensor, k_tensor, v_tensor), dim=0)
-print(concat_attention.size())
+#concat_attention = torch.cat((q_tensor, k_tensor, v_tensor), dim=0)
+#print(concat_attention.size())
 
 
 
