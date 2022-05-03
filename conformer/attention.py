@@ -1,3 +1,4 @@
+from audioop import bias
 from turtle import forward
 from requests import head
 import torch 
@@ -51,6 +52,7 @@ class ScaledDotProductAttention(nn.Module):
 
 
 
+
 class MHSA(nn.Module):
 
     def __init__(self, n_head = 5, encoder_dim = 256):
@@ -67,6 +69,9 @@ class MHSA(nn.Module):
         # scaled dot product layer 
         self.attention = ScaledDotProductAttention(q_value=self.fc_q, k_value=self.fc_k, v_value=self.fc_v)
 
+        # Linear transformation 
+        self.linear_transform = nn.Linear(encoder_dim, encoder_dim, bias=False) # fix 
+
 
     def forward(self, inputs):
 
@@ -75,18 +80,27 @@ class MHSA(nn.Module):
         K = self.fc_k(inputs)
         V = self.fc_v(inputs)
 
+        # list to concat 
+        scaled_dot_product_result = []
+
         # Scaled Dot Product layer
-        #heads = torch.empty((256)) 
-        for _ in range(1, self.n_head):
+        for _ in range(0, self.n_head):
             scaled_dot_product = self.attention(Q, K, V)
-            multi_heads = torch.cat([scaled_dot_product])
+            scaled_dot_product_result.append(scaled_dot_product)
+            #multi_heads = torch.cat([scaled_dot_product])
+        
+        scaled_dot_tensor = torch.stack(scaled_dot_product_result)
+        #concat = torch.cat((scaled_dot_tensor))
+        
+        linear_transform = self.linear_transform(scaled_dot_tensor)
+
         
 
         #multi_heads = torch.cat([scaled_dot_product])
         # concat scaled dot product matrix
         #concat_attention = torch.cat([multi_heads], dim=0)
 
-        return multi_heads
+        return linear_transform
         
 
 

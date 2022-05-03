@@ -17,19 +17,44 @@ k_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
 v_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
 
 n_heads = 5
-heads = torch.empty((256))
 
-for _ in range(1, n_heads):
+att_q  = []
+att_k = []
+att_v = []
+
+for _ in range(0, n_heads):
     
     q_tensor = q_value.forward(inputs)
     k_tensor = k_value.forward(inputs)
     v_tensor = v_value.forward(inputs)
-    concat = torch.cat([q_tensor, k_tensor, v_tensor], dim=0)
 
+    #att_list.append([q_tensor,  k_tensor,  v_tensor])
+    att_q.append(q_tensor)
+    att_k.append(k_tensor)
+    att_v.append(q_tensor)
+
+
+q_convert = torch.stack(att_q)
+k_convert = torch.stack(att_k)
+v_convert = torch.stack(att_v)
+
+
+concat = torch.cat((q_convert, k_convert, v_convert))
+#print(concat.size())
+print(concat)
+#print(q_convert)
+
+
+#concat = torch.cat([att_q_tensor, att_k_tensor, att_v_tensor], dim=0)
+
+
+#concat = torch.Tensor(attention_results)
     #heads.append(concat)
 
 
-print(concat.size())
+#print(concat)
+#print(5*256)
+#print(concat.size())
 #print(heads)
 #heads_tensor = torch.Tensor(heads)
 #print(type(heads_tensor))
