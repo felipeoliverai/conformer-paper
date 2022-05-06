@@ -2,13 +2,16 @@ https://lilianweng.github.io/posts/2018-06-24-attention/ - READ
 https://paperswithcode.com/method/scaled - READ 
 
 
-
-----------------------
-
-https://data-science-blog.com/blog/2021/04/07/multi-head-attention-mechanism/ - NEXT DEEP DIVE
-
-
+------ TO READ -----------
+https://data-science-blog.com/blog/2021/04/07/multi-head-attention-mechanism/
 torch permute: https://www.google.com/search?q=torch+permute&oq=torch+permute&aqs=chrome.0.0i512j0i22i30l6j69i60.1944j0j7&sourceid=chrome&ie=UTF-8 
+http://jalammar.github.io/illustrated-transformer/
+
+------------------------------------------------------
+
+
+
+
 
 
 

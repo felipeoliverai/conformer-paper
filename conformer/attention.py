@@ -77,7 +77,7 @@ class MHSA(nn.Module):
 
 
     def forward(self, inputs):
-
+        
         # linear Q,K,V
         Q = self.fc_q(inputs)
         K = self.fc_k(inputs)

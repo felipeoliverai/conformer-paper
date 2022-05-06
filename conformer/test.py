@@ -17,59 +17,44 @@ torch.manual_seed(42)
 encoder_dim = 256
 inputs = torch.rand(256)
 
+# transpose matrix 
 
-q_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
-k_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
-v_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
+matrix = torch.tensor([[1,2,3], [4,5,6], [7,8,9]])
+print("------- Matrix --------\n")
+print(matrix)
 
-n_heads = 5
+transpose_matrix = torch.t(matrix)
+print("\n\n -------- Transpose Matrix --------- \n")
+print(transpose_matrix)
 
-att_q  = []
-att_k = []
-att_v = []
 
-for _ in range(0, n_heads):
+
+#q_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
+#k_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
+#v_value = nn.Linear(encoder_dim, encoder_dim, bias=False)
+
+#n_heads = 5
+
+#att_q  = []
+#att_k = []
+#att_v = []
+
+#for _ in range(0, n_heads):
     
-    q_tensor = q_value.forward(inputs)
-    k_tensor = k_value.forward(inputs)
-    v_tensor = v_value.forward(inputs)
+#    q_tensor = q_value.forward(inputs)
+#    k_tensor = k_value.forward(inputs)
+#    v_tensor = v_value.forward(inputs)
 
     #att_list.append([q_tensor,  k_tensor,  v_tensor])
-    att_q.append(q_tensor)
-    att_k.append(k_tensor)
-    att_v.append(q_tensor)
+#    att_q.append(q_tensor)
+#    att_k.append(k_tensor)
+#    att_v.append(q_tensor)
 
 
-q_convert = torch.stack(att_q)
-k_convert = torch.stack(att_k)
-v_convert = torch.stack(att_v)
+#q_convert = torch.stack(att_q)
+#k_convert = torch.stack(att_k)
+#v_convert = torch.stack(att_v)
 
 
-concat = torch.cat((q_convert, k_convert, v_convert))
-#print(concat.size())
-print(concat)
-#print(q_convert)
-
-
-#concat = torch.cat([att_q_tensor, att_k_tensor, att_v_tensor], dim=0)
-
-
-#concat = torch.Tensor(attention_results)
-    #heads.append(concat)
-
-
+#concat = torch.cat((q_convert, k_convert, v_convert))
 #print(concat)
-#print(5*256)
-#print(concat.size())
-#print(heads)
-#heads_tensor = torch.Tensor(heads)
-#print(type(heads_tensor))
-
-
-
-
-#print(x, "\n\n")
-#print(x.size())
-
-#print(type(x))
-#print("\n\n Transpose: ", torch.t(x))
