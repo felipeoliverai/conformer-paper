@@ -3,6 +3,12 @@ import torch
 from torch import nn
 
 
+# check out GPU 
+device = torch.cuda.is_available()
+print(device)
+
+
+
 #x = torch.tensor([[34, 56, 678, 10], [10, 46, 79, 10], [79, 98, 34, 5]])
 #print(x)
 

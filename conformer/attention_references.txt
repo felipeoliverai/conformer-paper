@@ -2,17 +2,18 @@ https://lilianweng.github.io/posts/2018-06-24-attention/ - READ
 https://paperswithcode.com/method/scaled - READ 
 
 
-https://www.google.com/search?q=o+que+e+matriz+transposta&oq=o+que+e+uma+matriz+trans&aqs=chrome.1.69i57j0i22i30l2j69i64.5629j0j7&sourceid=chrome&ie=UTF-8 - NEXT 
+
+----------------------
+
 https://data-science-blog.com/blog/2021/04/07/multi-head-attention-mechanism/ - NEXT DEEP DIVE
+
+
 torch permute: https://www.google.com/search?q=torch+permute&oq=torch+permute&aqs=chrome.0.0i512j0i22i30l6j69i60.1944j0j7&sourceid=chrome&ie=UTF-8 
 
 
 
 
 https://theaisummer.com/transformer/
-
-
-
 self-attention: https://theaisummer.com/self-attention/ 
 
 MHSA: https://paperswithcode.com/method/multi-head-attention 
